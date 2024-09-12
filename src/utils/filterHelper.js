@@ -38,9 +38,11 @@ const filters = {
     },
   };
   
-  function filterHelper(start, end, params) {
+  function filterHelper(start, end, params,defaultOrderBy="id asc") {
     console.log("Building Query String");
-    if(!("$skip" in params)) {
+    if(!("$orderby" in params)) params["$orderby"] = defaultOrderBy
+
+    if(!("$skip" in params) && ("$top" in params)) {
       params["$skip"] = 0
     }
     let tempStrArr = [[start, 4]];

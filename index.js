@@ -7,10 +7,11 @@ require("dotenv").config();
 
 (async () => {
   try {
+    console.log(sqlConfig);
     await sql.connect(sqlConfig)
   } catch (err) {
     if (err instanceof Error) {
-      console.log(err.message);
+      throw err
       
     }else
       console.log(err);

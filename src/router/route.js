@@ -15,6 +15,7 @@ async function route(req, res, path, param) {
   if(!path[0]) return func();
   console.log(path[0]);
   console.log(req.method);
+  if(!routeConfig[path[0]]) return func();
   const f = routeConfig[path[0]][req.method.toLowerCase()];
   if (!f) return func();
 

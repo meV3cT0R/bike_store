@@ -12,7 +12,7 @@ function getCustomers(req, res, params) {
   getHelper(req, res, params, {
     startStr: `select * from ${TABLE_NAME}`,
     endStr: "",
-  });
+  }, "customer_id",["email"]);
 }
 
 function postCustomer(req, res, params) {
@@ -33,6 +33,8 @@ function updateCustomer(req,res,params) {
 
 function deleteCustomer(req,res,params) {
   console.log("Inside deleteCustomer()");
-  deleteHelper(req,res,params,TABLE_NAME);
+  deleteHelper(req,res,params,TABLE_NAME,{
+    conditions:["customer_id"]
+  });
 }
 module.exports = { getCustomers, postCustomer, updateCustomer, deleteCustomer};
