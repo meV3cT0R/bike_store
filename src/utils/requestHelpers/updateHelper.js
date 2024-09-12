@@ -1,6 +1,6 @@
 const client = require("mssql")
 
-function queryGenerator(body,table_name, discard) {
+function queryGenerator(body,table_name, discard,conditions) {
     let query = `update ${table_name} `;
     query += "set ";
     const arr = Object.keys(body);
@@ -13,11 +13,19 @@ function queryGenerator(body,table_name, discard) {
             query += body[arr[i]]
         if (i != arr.length - 1) query += ',';
     }
-    query += ` where customer_id=${body.customer_id}`
+    query += ` where `
+    for (let i=0;i<conditions.length;i++) {
+        query += `${conditions[i]} = `
+        if (typeof conditions[i] == "string")
+            query += `'${body[conditions[i]]}'`
+        else
+            query += body[conditions[i]]
+        if (i != conditions.length - 1) query += ' and ';
+    }
     console.log(`Query Built : ${query}`);
     return query;
 }
-function updateHelper(req, res, params, table_name, discard) {
+function updateHelper(req, res, params, table_name, discard,conditions) {
     let body = [];
     req
         .on("data", (chunk) => {
@@ -29,7 +37,7 @@ function updateHelper(req, res, params, table_name, discard) {
             console.log("Request Body Parsed");
             console.log(body);
 
-            query = queryGenerator(body,table_name,discard);
+            query = queryGenerator(body,table_name,discard,conditions);
 
             client.query(query, (err, result) => {
                 if (err) {

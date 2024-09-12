@@ -28,7 +28,7 @@ function postCustomer(req, res, params) {
 
 function updateCustomer(req,res,params) {
   console.log("Inside updateCustomer()");  
-  updateHelper(req,res,params,TABLE_NAME,["customer_id"])
+  updateHelper(req,res,params,TABLE_NAME,["customer_id"],["customer_id"])
 }
 
 function deleteCustomer(req,res,params) {
