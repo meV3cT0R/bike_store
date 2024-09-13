@@ -14,7 +14,7 @@ function getStaffs(req, res, params) {
     endStr: "",
   },"staff_id",[]);
 }
-
+  
 function postStaff(req, res, params) {
   console.log("Inside postStaff()");
   postHelper(

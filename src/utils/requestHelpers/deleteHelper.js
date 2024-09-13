@@ -24,7 +24,10 @@ function deleteHelper(req, res, params, table_name,config ) {
             console.log("Parsing Request Body");
         })
         .on("end", () => {
-            body = JSON.parse(Buffer.concat(body).toString());
+            body = Buffer.concat(body).toString();
+            console.log(body);
+
+            body = JSON.parse(body);
             console.log("Request Body Parsed");
             console.log(body);
 

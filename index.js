@@ -25,6 +25,7 @@ require("dotenv").config();
     if (!req.url.startsWith("/api/v1")) {
       res.statusCode = 200;
       res.setHeader("Content-Type", "application/json");
+      
       res.end(
         JSON.stringify({
           message: "Hello World",
@@ -32,7 +33,16 @@ require("dotenv").config();
       );
       return;
     }
-
+    res.setHeader("Access-Control-Allow-Origin", "*")
+    res.setHeader('Access-Control-Allow-Methods','*');
+    res.setHeader('Access-Control-Allow-Headers','*');
+    if (req.method === 'OPTIONS') {
+      res.writeHead(204); // No content for preflight request
+      res.end(JSON.stringify({
+        message : "prefligh request"
+      }));
+      return;
+  }
     const pathAndQuery = req.url.split("?");
     const path = pathAndQuery[0].split("/").slice(3);
     const query = pathAndQuery[1];
